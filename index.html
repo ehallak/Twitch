@@ -11,22 +11,30 @@
   <script src = 'https://code.jquery.com/jquery-3.2.1.min.js'>
   </script>
   <script type="text/javascript">
-  var stream = "https://gist.githubusercontent.com/QuincyLarson/2ff6892f948d0b7118a99264fd9c1ce8/raw/e9e12f154d71cf77fc32e94e990749a7383ca2d6/Twitch%2520sample%2520API%2520responses%2520in%2520array%2520form"
+  var streamApi = "https://gist.githubusercontent.com/QuincyLarson/2ff6892f948d0b7118a99264fd9c1ce8/raw/e9e12f154d71cf77fc32e94e990749a7383ca2d6/Twitch%2520sample%2520API%2520responses%2520in%2520array%2520form"
   $.ajax( {
-	url: stream,
+	url: streamApi,
 	dataType: 'json',
 	type: 'GET',
 	success: function(data) {
 		//console.log(data);
 		$("#results").empty();
 		var template = $("#list_item").html();
-
+		var staus;
 		for (var i = 0; i < data.length; i++) {
 		  var listItem = $(template);
-
-		  $(listItem).find(".title").text(data[i].display_name)
-
-		  $("#results").append($(listItem));
+		if (data[i].stream == null){
+		  var name = data[i].display_name;
+		  status = "offline";
+		} else {
+		  var name = data[i].stream.display_name;
+		  status = "online";
+		  }
+		  if ( !data[i].error ){
+			$(listItem).find(".title").text(name);
+			$(listItem).find(".status").text(status);
+			$("#results").append($(listItem));
+		  }
 		}
 	}
 });
@@ -38,7 +46,7 @@
       <li>
         <a class="link">
           <h4 class="title"></h4>
-          <p class="summary"></p>
+          <p class="status"></p>
         </a>
       </li>
     </script>
