@@ -4,16 +4,21 @@
 
 </style>
 </head>
-<title>Twitch</title>
+<title>Use Twitch API</title>
   <body id = back>
 	<div id = 'searchResults'></div>
   </body>
-  
   <script src = 'https://code.jquery.com/jquery-3.2.1.min.js'>
   </script>
   <script type="text/javascript">
-  $.getJSON('https://api.twitch.tv/kraken/streams/freecodecamp?callback=?', function(data) {
-  console.log(data);
-});
+  var stream = "https://gist.githubusercontent.com/QuincyLarson/2ff6892f948d0b7118a99264fd9c1ce8/raw/e9e12f154d71cf77fc32e94e990749a7383ca2d6/Twitch%2520sample%2520API%2520responses%2520in%2520array%2520form"
+  $.ajax( {
+          url: stream,
+          dataType: 'json',
+          type: 'GET',
+          success: function(data) {
+		  console.log(data);
+		  }
+		  });
   </script>
 </html>
